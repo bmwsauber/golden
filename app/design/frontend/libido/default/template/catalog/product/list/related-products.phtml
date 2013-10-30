@@ -1,0 +1,23 @@
+<?php if($this->getItems()->getSize()): ?>
+    <div class="columns">
+        <?php foreach($this->getItems() as $_item): ?>
+            <?php $_item = Mage::getModel('catalog/product')->load($_item->getId()); ?>
+            <!-- start col -->
+            <div class="col">
+                <div class="image-holder">
+                    <a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>" class="product-image">
+                        <img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail') ?>" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" />
+                    </a>
+                </div>
+                <h3><?php echo $this->htmlEscape($_item->getName()) ?></h3>
+                <h4><?php echo $_item->getShortDescription() ; ?></h4>
+                <?php echo $_item->getDescription() ; ?>
+                <a href="<?php echo $_item->getProductUrl() ?>" class="more"><?php echo $this->__('Read more') ?></a>
+            </div>
+            <!-- end col -->
+        <?php endforeach ?>
+    </div>
+<?php endif ?>
+
+
+

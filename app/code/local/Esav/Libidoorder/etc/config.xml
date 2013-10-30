@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Esav_Libidoorder>
+      <version>0.1.0</version>
+    </Esav_Libidoorder>
+  </modules>
+  <frontend>
+    <routers>
+      <libidoorder>
+        <use>standard</use>
+          <args>
+            <module>Esav_Libidoorder</module>
+            <frontName>libidoorder</frontName>
+          </args>
+      </libidoorder>
+    </routers>
+		<layout>
+		  <updates>
+			<libidoorder>
+			  <file>libidoorder.xml</file>
+			</libidoorder>
+		  </updates>
+		</layout>
+  </frontend>
+  <global>
+    <helpers>
+      <libidoorder>
+        <class>Esav_Libidoorder_Helper</class>
+      </libidoorder>
+    </helpers>
+	<blocks>
+	  <libidoorder>
+		<class>Esav_Libidoorder_Block</class>
+	  </libidoorder>
+	</blocks>
+	<models>
+	  <libidoorder>
+		<class>Esav_Libidoorder_Model</class>
+		<resourceModel>libidoorder_mysql4</resourceModel>
+	  </libidoorder>
+	  <libidoorder_mysql4>
+		<class>Esav_Libidoorder_Model_Mysql4</class>
+		<entities>		  
+			  <libidoorder>
+				<table>libidoorder</table>
+			  </libidoorder>
+        </entities>
+	  </libidoorder_mysql4>
+	</models>
+	<resources>
+	  <libidoorder_setup>
+		<setup>
+		  <module>Esav_Libidoorder</module>
+		</setup>
+		<connection>
+		  <use>core_setup</use>
+		</connection>
+	  </libidoorder_setup>
+	  <libidoorder_write>
+		<connection>
+		  <use>core_write</use>
+		</connection>
+	  </libidoorder_write>
+	  <libidoorder_read>
+		<connection>
+		  <use>core_read</use>
+		</connection>
+	  </libidoorder_read>
+	</resources>
+  </global>
+  <admin>
+	<routers>
+	  <libidoorder>
+	    <use>admin</use>
+		<args>
+		  <module>Esav_Libidoorder</module>
+		  <frontName>libidoorder</frontName>
+		</args>
+	  </libidoorder>
+	</routers>
+  </admin>
+  <adminhtml>
+	<menu>
+	  <libidoorder module="libidoorder">
+		<title>Libidoorder</title>
+		<sort_order>50</sort_order>
+		<children>
+		  <!--libidoorderbackend module="libidoorder">
+			<title>Backend Page Title</title>
+			<sort_order>0</sort_order>
+			<action>libidoorder/adminhtml_libidoorderbackend</action>
+		  </libidoorderbackend-->
+		  <libidoorder module="libidoorder">
+		    <title>Manage Libidoorder</title>
+			<sort_order>0</sort_order>
+			<action>libidoorder/adminhtml_libidoorder</action>
+		  </libidoorder>
+		</children>
+	  </libidoorder>
+	</menu>
+	<acl>
+	  <!--resources>
+		<all>
+		  <title>Allow Everything</title>
+		</all>
+		<admin>
+		  <children>
+			<libidoorder translate="title" module="libidoorder">
+			  <title>Libidoorder</title>
+			  <sort_order>500</sort_order>
+			  <children>
+		  <libidoorderbackend translate="title">
+			<title>Backend Page Title</title>
+		  </libidoorderbackend>
+		  <libidoorder translate="title">
+			<title>Manage Libidoorder</title>
+			<sort_order>0</sort_order>
+		  </libidoorder>
+			  </children>
+			</libidoorder>
+		  </children>
+		</admin>
+	  </resources-->
+	</acl>
+	<layout>
+	  <updates>
+		<libidoorder>
+		  <file>libidoorder.xml</file>
+		</libidoorder>
+	  </updates>
+	</layout>
+  </adminhtml>    
+    <!--crontab>
+        <jobs>            
+			<libidoorder_neworder>
+                <schedule><cron_expr>*/5000 * * * *</cron_expr></schedule>
+                <run><model>libidoorder/cron::NewOrder</model></run>
+            </libidoorder_neworder>
+        </jobs>
+    </crontab-->
+</config> 

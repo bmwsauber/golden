@@ -1,0 +1,15 @@
+order_id;created_at;product_sku;name;email;mobile;address;zipcode;country;qty;price;sum;currency;
+1;2013-10-04 15:31:12;golden_libido_vital;Andrey Andr;callmeandrey@gmail.com;0686100310;Ukrain Kharkov;;uk;1;84.66;84.66;USD;
+5;2013-10-04 17:50:58;golden_libido_active;Andrey Andr;callmeandrey@gmail.com;0686100310;Ukrain Kharkov;31064;uk;3;84.66;253.98;USD;
+6;2013-10-04 18:02:33;golden_libido_woman;a;12@12.ua;Mobile number:;asda;2312;sweden;1;80.00;80.00;USD;
+7;2013-10-05 19:04:11;golden_libido_woman;Marius Hermansen;marius@proteinfabrikken.no;41918532;Jahn Ekenæsvei 25;3179;norway;1;80.00;80.00;USD;
+8;2013-10-07 15:47:36;golden_libido_active;joakim flatmoen;jsf@adappt.no;40066041;nydalsveien33;0484;norway;1;84.66;84.66;USD;
+9;2013-10-09 11:16:10;golden_libido_vital;Andrey;callmeandrey@gmail.com;0686100310;Ukrain Kharkov;31064;uk;1;76.33;76.33;USD;
+10;2013-10-09 11:43:33;golden_libido_vital;Andrey;test@test.ru;0686100310;Ukrain Kharkov;1111111;uk;1;76.33;76.33;USD;
+11;2013-10-09 12:54:15;golden_libido_woman;gggg;uuj@fsdgsd.ru;445555;Kllll;567477;sweden;1;80.00;80.00;USD;
+12;2013-10-09 12:55:09;golden_libido_woman;Test;test@test.ru;333333;test;31064;sweden;1;80.00;80.00;USD;
+13;2013-10-09 14:47:51;golden_libido_vital;joakim;jsf@adappt.no;40066041;nydalsveien33;0484;norway;1;76.33;76.33;USD;
+14;2013-10-09 16:08:26;golden_libido_woman;test;jelmer@adappt.no;123;erger;4545;norway;1;80.00;80.00;USD;
+15;2013-10-09 16:17:27;golden_libido_woman;test;jelmer@adappt.no;123;erger;4545;norway;1;80.00;80.00;USD;
+16;2013-10-09 18:24:49;golden_libido_active;tester;tester@test.no;40066041;tester;0484;norway;1;84.66;84.66;USD;
+17;2013-10-10 18:05:59;golden_libido_woman;adsd;adasdas@asd.no;23234234234;423423423;4332;norway;1;80.00;80.00;NOK;

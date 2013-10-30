@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <libidoorder_adminhtml_libidoorderbackend_index>
+	<reference name="content">
+	  <block type="libidoorder/adminhtml_libidoorderbackend" name="libidoorderbackend" template="libidoorder/libidoorderbackend.phtml"/>
+	</reference>
+  </libidoorder_adminhtml_libidoorderbackend_index>
+  <libidoorder_adminhtml_libidoorder_index>
+	<reference name="content">
+	  <block type="libidoorder/adminhtml_libidoorder" name="libidoorder" />
+	</reference>
+  </libidoorder_adminhtml_libidoorder_index>
+</layout>

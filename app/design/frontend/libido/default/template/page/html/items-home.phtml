@@ -1,0 +1,84 @@
+<?php
+	$category_url_key=Mage::getStoreConfig('orders/home/category_sku',Mage::app()->getStore());
+    $_category = Mage::getModel ('catalog/category')
+            ->getCollection ()
+            //->addAttributeToSelect ('name')
+            ->addAttributeToFilter ('url_key', $category_url_key)
+            ->getFirstItem ();
+    // get products  for category  ----------------
+    $products = $_category->getProductCollection()
+                ->addAttributeToSort('position', 'asc')
+                ->addAttributeToFilter('visibility', array('neq' => 1)) // Ensure the product is visible
+                ->addAttributeToFilter('status', 1) // Ensure the product is enabled
+                ->setCurPage(1)->setPageSize(5)->load();
+    $n = 0;
+?>
+<?php foreach($products as $product ):  ?>
+    <?php
+        $_product = Mage::getModel ('catalog/product')->load ($product->getId() );
+        $n++;
+    ?>
+    <div class="col col<?php echo $n;?>">
+        <a href="<?php echo $_product->getProductUrl();?>">
+            <img src="<?php echo $this->helper('catalog/image')->init($_product, 'image');?>"  alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>" />
+        </a>
+        <h2><?php echo $_product->getName();?></h2>
+        <h3><?php echo $_product->getShortDescription();?></h3>
+        <?php echo $_product->getDescription();?>
+
+        <a href="<?php echo $_product->getProductUrl();?>" class="more"><?php echo $this->__("Read more");?></a>
+    </div>
+<?php endforeach; ?>
+
+<?php /*
+<!-- start col col1 -->
+<div class="col col1">
+    <img src="{{media url="wysiwyg/img12.png"}}"  alt="Golden Libido Women" />
+    <h2>Golden Libido Women</h2>
+    <h3>Long time vitality enhancer</h3>
+    <ul>
+        <li>Supported by clinical studies</li>
+        <li>Long time Libido and vitality enhancer</li>
+        <li>Feel powerfull and energic</li>
+        <li>Optimize male performance</li>
+        <li>Optimize function of the nerveous system</li>
+        <li>Reduction of tierdness and fatique</li>
+        <li>Contribute to normal fertility and reproduction</li>
+    </ul>
+    <a href="javascript.void(0)" class="more">more</a>
+</div>
+<!-- end col col1 -->
+<!-- start col col2 -->
+<div class="col col2">
+    <img src="{{media url="wysiwyg/img13.png"}}"  alt="Golden Libido Vital" />
+    <h2>Golden Libido Vital</h2>
+    <h3>Long time vitality enhancer</h3>
+    <ul>
+        <li>Supportet by  Clinical Studies</li>
+        <li>Long time Libido and vitality enhancer</li>
+        <li>Feel powerfull and energic</li>
+        <li>Optimize male performance</li>
+        <li>Optimize function of the nerveous system</li>
+        <li>Reduction of tierdness and fatique</li>
+        <li>Contribute to normal fertility and reproduction</li>
+    </ul>
+    <a href="javascript.void(0)" class="more">more</a>
+</div>
+<!-- end col col2 -->
+<!-- start col col3 -->
+<div class="col col3">
+    <img src="{{media url="wysiwyg/img14.png"}}"  alt="Golden Libido Active" />
+    <h2>Golden Libido Active</h2>
+    <h3>Instant performance for men</h3>
+    <ul>
+        <li>Supportet by  Clinical Studies</li>
+        <li>Instant Libido and Erectile performance</li>
+        <li>Prolonged Effect</li>
+        <li>Increased Blood Flow</li>
+        <li>Increased Stamina</li>
+        <li>Strongest natural alternative to Viagra &reg;</li>
+    </ul>
+    <a href="javascript.void(0)" class="more">more</a>
+</div>
+<!-- end col col3 -->
+ */ ?>

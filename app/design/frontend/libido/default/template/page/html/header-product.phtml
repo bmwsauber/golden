@@ -1,0 +1,22 @@
+<div class="header">
+    <?php echo $this->getLayout()->createBlock("page/switch")->setTemplate("page/switch/languages.phtml")->toHtml(); ?>
+
+    <h1 class="logo">
+        <?php /*<a href="#"><img src="images/logo-mob.png" alt="image description"/></a>*/?>
+        <?php if ($this->getIsHomePage()):?>
+            <a href="javascript:void(0)" title="<?php echo $this->getLogoAlt() ?>" ><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
+        <?php else:?>
+            <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" ><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
+        <?php endif?>
+    </h1>
+    <ul class="links">
+        
+		<?php if (! Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+			<li><a href="<?php echo Mage::helper('customer')->getRegisterUrl(); ?>"><?php echo $this->__('Log In') ?></a></li>
+		<?php else: ?>
+			<li><a href="<?php echo Mage::helper('customer')->getLogoutUrl(); ?>"><?php echo $this->__('Logout') ?></a></li>
+			<li><a href="<?php echo Mage::helper('customer')->getAccountUrl(); ?>"><?php echo $this->__('My Account') ?></a></li>			
+		<?php endif; ?>
+		<li><a href="#"><?php echo $this->__("Checkout");?></a></li>
+    </ul>
+</div>

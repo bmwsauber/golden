@@ -1,0 +1,41 @@
+<?php
+/**
+ * Template for Mage_Page_Block_Html
+ */
+?>
+<?php
+	$category_url_key=Mage::getStoreConfig('orders/home/category_sku',Mage::app()->getStore());
+    $_category = Mage::getModel ('catalog/category')
+        ->getCollection ()
+        ->addAttributeToSelect ('image')
+        ->addAttributeToFilter ('url_key', $category_url_key)
+        ->getFirstItem ();
+    $imageUrl=$_category->getImageUrl();
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--[if lt IE 7 ]>
+<html lang="<?php echo $this->getLang() ?>" xml:lang="<?php echo $this->getLang() ?>" class="ie6"><![endif]-->
+<!--[if IE 7 ]>
+<html lang="<?php echo $this->getLang() ?>" xml:lang="<?php echo $this->getLang() ?>" class="ie7"><![endif]-->
+<!--[if IE 8 ]>
+<html lang="<?php echo $this->getLang() ?>" xml:lang="<?php echo $this->getLang() ?>" class="ie8"><![endif]-->
+<!--[if IE 9 ]>
+<html lang="<?php echo $this->getLang() ?>" xml:lang="<?php echo $this->getLang() ?>" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="<?php echo $this->getLang() ?>" xml:lang="<?php echo $this->getLang() ?>" class="no-js"><!--<![endif]-->
+    <head>
+        <?php echo $this->getChildHtml('head') ?>
+    </head>
+    <?php // echo $this->getSkinUrl("images/bg-home.jpg"); ?>
+    <body class="page-empty home  <?php echo $this->getBodyClass()?$this->getBodyClass():'' ?>" style="background: url(<?php echo $imageUrl; ?>) repeat 50% 50%;">
+        <div class="wrapper">
+            <?php //echo $this->getChildHtml('after_body_start') ?>
+			<?php echo $this->getChildHtml('global_notices') ?>
+            <?php echo $this->getChildHtml('global_messages') ?>
+            <?php echo $this->getChildHtml('content') ?>
+            <?php //echo $this->getChildHtml('before_body_end') ?>
+            <?php //echo $this->getAbsoluteFooter() ?>
+        </div>
+    </body>
+</html>

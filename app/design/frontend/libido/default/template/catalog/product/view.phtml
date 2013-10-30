@@ -1,0 +1,235 @@
+<?php
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+?>
+
+<?php //-------------------------------------------------------------------------------------------------------------------------- ?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct(); ?>
+<?php
+    $cssClass=='';
+    if($_product->getCssClass())$cssClass=$_product->getCssClass();
+?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+
+<?php
+    $MT=new Mage_Page_Block_Html_Header();
+    //$logoImageUrl=Mage::getStoreConfig('design/header/logo_src');
+    $logoImageUrl=$MT->getLogoSrc();
+    //$logoAlt=Mage::getStoreConfig('design/header/logo_alt');
+    $logoAlt=$MT->getLogoAlt();
+?>
+<div class="wrapper-top bg1  <?php echo $cssClass; ?> " style="background: url(<?php echo $this->helper('catalog/image')->init($_product, 'background_image'); ?>) no-repeat 50% 0;">
+    <?php $_imageUrl=$this->helper('catalog/image')->init($_product, 'image'); ?>
+    <?php echo $this->getChildHtml('header.product') ?>
+    <div class="main-container col2-right-layout">
+        <div class="main">
+            <!-- start holder -->
+            <div class="holder">
+                <!-- start col-main -->
+                <div class="col-main">
+                    <div class="image-holder">
+                        <img src="<?php echo $_imageUrl; ?>" alt=""/>
+                        <img class="mark" src="<?php echo $this->getSkinUrl('images/mark.png'); ?>" alt=""/>
+                    </div>
+                    <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                    <h2><?php echo $_product->getShortDescription() ; ?></h2>                   
+                    <div class="list">
+                        <?php echo $_product->getDescription() ; ?>
+                    </div>
+                    <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $logoAlt ?>" >
+                        <img src="<?php echo $logoImageUrl ?>" alt="<?php echo $logoAlt ?>" />
+                    </a>
+                </div>
+                <!-- end col-main -->
+                <!-- start col-right sidebar -->
+                <div class="col-right sidebar">
+                    <div class="form-box">
+                        <?php /*
+                        <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+                        */ ?>
+                        <form id="form-validate-active" name="form-validate-active" method="post" action="<?php echo $this->getUrl().'libidoorder/index/savePost'; ?>" enctype="multipart/form-data" >
+                            <div class="no-display" style="display: none;">
+                                <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+								<input type="hidden" name="product_sku" value="<?php echo $_product->getSku() ?>" />								
+                                <input type="hidden" name="related_product" id="related-products-field" value="" />
+                            </div>
+                            <span class="title"><?php echo $this->__('Order') ?></span>
+                            <strong class="form-title"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>:</strong>
+                            <ul class="form-list">
+                                <?php $_val='*'.$this->__('Your name:');?>
+                                <li><input type="text" class="input-text required-entry custom-new placeholder-cust" name="firstname"  maxlength="30" title="<?php echo $_val ?>" value="<?php echo $_val ?>" /></li>
+                                <?php $_val='*'.$this->__('E-mail:');?>
+                                <li><input type="text" class="input-text validate-email required-entry custom-new placeholder-cust" name="email" maxlength="39" title="<?php echo $_val ?>" value="<?php echo $_val ?>" /></li>
+                                <?php $_val=$this->__('Mobile number:');?>
+                                <li><input type="text" class="input-text placeholder-cust"  maxlength="20" name="mobile_number" title="<?php echo $_val ?>" value="<?php echo $_val ?>" /></li>
+                                <!--li>
+                                    <div class="input-text">
+                                        <label for="country"><?php echo $this->__('Country') ?></label>
+                                        <select  id="country" name="country" class="required-entry " >
+                                            <option selected="selected" value=""><?php echo $this->__('select country') ?></option>
+                                            <option value="norway"><?php echo $this->__('Norge') ?></option>
+                                            <option value="sweden"><?php echo $this->__('Sverige') ?></option>
+                                            <option value="denmark"><?php echo $this->__('Nederland') ?></option>
+                                            <option value="uk"><?php echo $this->__('England') ?></option>
+                                        </select>
+                                    </div>
+                                </li-->
+                                <?php $_val='*'.$this->__('Address:');?>
+                                <li><input type="text" class="input-text required-entry custom-new placeholder-cust" maxlength="30" name="address" class="required-entry custom-new" title="<?php echo $_val ?>" value="<?php echo $_val ?>"  /></li>
+                                <?php $_val='*'.$this->__('Zip:');?>
+                                <li><input type="text" size="9" maxlength="7" class="input-text validate-number custom-new placeholder-cust" name="zip"  title="<?php echo $_val ?>" value="<?php echo $_val ?>" /></li>
+                                <?php $_val=$this->__('Qty');?>
+								<?php /* 
+                                <li>
+                                    <?php if(!$_product->isGrouped()): ?>
+                                        <input type="text" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $_val ?>"  class="input-text  required-entry validate-number qty-form" />
+                                    <?php endif; ?>
+                                </li>
+								*/ ?>
+                                <li class="control">
+                                    <input type="checkbox" class="check validate-select" name="confirm" id="confirm" />
+                                    <label for="confirm">
+                                        <?php echo $this->__('I confirm that I am at least 18 years and that I have read and accepted the Natural Pharma Group Ltd conditions.') ?>
+                                    </label>
+                                </li>
+                            </ul>
+
+                            <?php echo $this->getTierPriceHtml() ?>
+                            <?php
+                                $current_currency= Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol();
+                                $price_final=$_product->getFinalPrice();
+                                $prise_total=$price_final;
+                                $price=Mage::helper('core')->currency($prise_total,false,false);
+                                if( !fmod($price, 1) ) $price.=$_pr.',-';
+                                else $price=number_format($price, 2, ',', '');
+                                //echo $current_currency.$price;
+                            ?>
+                            <input type="hidden" name="price" maxlength="10"  value="<?php echo $price_final; ?>"   />
+                            <input type="hidden" name="total" maxlength="10"  value="<?php echo $price_final; ?>"   />
+                            <input type="hidden" name="product_id"   value="<?php echo $_product->getId(); ?>"   />
+                            <input type="hidden" name="currency" maxlength="20"  value="<?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>"   />
+
+                            <div class="price-box">
+                                <span class="price"><span><?php  echo $current_currency; ?></span>&nbsp;<span class="total_value"><?php  echo $price; ?></span></span><?php echo $this->__('(free shipping)') ?>
+                            </div>
+                            <?php if($_product->isSaleable()): ?>
+                                <?php //echo $this->getChildHtml('addtocart') ?>
+                                <?php $buttonTitle = $this->__('add to cart'); ?>
+                                <button type="submit" title="<?php echo $buttonTitle ?>" class="button btn-cart" ><?php echo $this->__("add to cart")?></button>
+                            <?php endif; ?>
+                        </form>
+                    </div>
+                    <span class="notice"><?php echo $this->__('click here to buy a single product') ?></span>
+                </div>
+                <!-- end col-right sidebar -->
+            </div>
+            <!-- end holder -->
+            <!-- start holder -->
+            <div class="holder">
+                <!-- start col-right sidebar -->
+                <div class="col-right sidebar">
+                    <div class="image-holder">
+                        <img src="<?php echo $_imageUrl; ?>" alt=""/>
+                        <img class="mark" src="<?php echo $this->getSkinUrl('images/mark.png'); ?>" alt="image description"/>
+                    </div>
+                </div>
+                <!-- end col-right sidebar -->
+                <!-- start col-main -->
+                <div class="col-main">
+                    <ul class="news-list">
+                        <li>
+                            <img src="<?php echo $this->getSkinUrl('images/img1.jpg'); ?>" alt="image description"/>
+                            <a href="#work" class="more popup-link"><?php echo $this->__('+ How it works') ?></a>
+                        </li>
+                        <li>
+                            <img src="<?php echo $this->getSkinUrl('images/img2.jpg'); ?>" alt="image description"/>
+                            <a href="#great" class="more popup-link"><?php echo $this->__('+ 10 great tips') ?></a>
+                        </li>
+                        <li>
+                            <img src="<?php echo $this->getSkinUrl('images/img3.jpg'); ?>" alt="image description"/>
+                            <a href="#see" class="more popup-link"><?php echo $this->__('+ See the advert') ?></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- end col-main -->
+            </div>
+            <!-- end holder -->
+        </div>
+    </div>
+</div>
+<div class="promo col2-right-layout <?php echo $cssClass; ?> ">
+    <?php echo $this->getChildHtml('catalog.product.related-products') ?>
+    <div class="col-right sidebar">
+        <div class="img-bar">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('graph')->toHtml(); ?>
+        </div>
+        <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $logoAlt ?>" >
+            <img src="<?php echo $logoImageUrl ?>" alt="<?php echo $logoAlt ?>" />
+        </a>
+    </div>
+    <div class="country-ttl norway">
+        <p>Product of Norway</p>
+    </div>
+</div>
+
+
+<div class="footer">
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('product-footer')->toHtml(); ?>
+    
+</div>
+<?php $_product_sku=$_product->getSku();  ?>
+<div class="light-box mfp-hide" id="work">
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('how-it-works_'.$_product_sku)->toHtml(); ?>
+</div>
+<div class="light-box mfp-hide" id="great">
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('great-tips_'.$_product_sku)->toHtml(); ?>
+</div>
+<div class="light-box mfp-hide" id="see">
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('see-the-advert_'.$_product_sku)->toHtml(); ?>
+   
+</div>
+
+
+<script type="text/javascript">
+    //<![CDATA[	
+    var dataFormOrder = new VarienForm('form-validate-active', true)
+
+    jQuery().ready(function(){
+        jQuery('.qty-form').change(function(){
+            var form=jQuery(this).closest("form");
+            var price=jQuery(form).find("input[name=price]").first().val();
+            var count=jQuery(form).find("input[name=qty]").first().val();
+            var total=price*count;
+            jQuery(form).find("span.total_value").html(total);
+            jQuery(form).find("input[name=total]").first().val(total);
+        });
+    });
+	
+    String.prototype.trim = function(str) { return str.replace(/^\s+|\s+$/g, ""); }
+    Validation.add('custom-new','<?php echo $this->__("This is a required field.") ?>',function(the_field_value,elm){
+        the_field_value=String.prototype.trim(the_field_value);
+        if( the_field_value != elm.title && ('* '+elm.title) != the_field_value && ('*'+elm.title) != the_field_value )
+        { return true;  }
+        return false;
+    });
+    Validation.add('custom-old','<?php echo $this->__("Replace old value .") ?>',function(the_field_value,elm){
+        the_field_value=String.prototype.trim(the_field_value);
+        if( the_field_value == elm.title || ('* '+elm.title) == the_field_value || ('*'+elm.title) == the_field_value )  { elm.value='';  }
+        return true;
+    });
+	jQuery.noConflict();
+	jQuery().ready(function(){
+		jQuery('.placeholder-cust').blur(function(){ if(this.value == '') {this.value = this.title; } });
+		jQuery('.placeholder-cust').focus(function(){ if(this.value == this.title ) {this.value = '';} });
+	});
+	//]]>
+</script>
+
+
